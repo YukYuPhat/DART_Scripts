@@ -1,4 +1,16 @@
+#this is for Maintenance Surface Pro Tablets
+
 #create Temp folder and copy script into folder
+
+#variables for paths and files to run
+
+$TempPath = C:\Temp\
+
+$AllisonPath = I:\Maintenance\Allison\AllisonDOCv2019.1.exe
+$AllisonExecute = C:\Temp\AllisonDOCv2019.1.exe
+
+$VoithPath = I:\Maintenance\Voith\Voith.3\DIWAnosis352Setup.exe
+$VoithExecute = C:\Temp\DIWAnosis352Setup.exe
 
 #copy script to new computer from I: drive
 
@@ -18,167 +30,33 @@ if ($NewComputer -eq 'yes'){
     msiexec.exe /i anyconnect-win-4.7.00136-dart-predeploy-k9.msi |out-null
 
     echo 'cisco done'
-
-    Copy-Item -Path I:\Drivers\Realtek-High-Definition-Audio-Driver_5CH91_WIN_6.0.8960.1_A02.exe -Destination C:\Temp\ |out-null
-    Start-Process C\Temp\Realtek-High-Definition-Audio-Driver_5CH91_WIN_6.0.8960.1_A02.exe |out-null
-
-    echo 'Sound Driver done'
-
-    Copy-Item -Path I:\Microsoft\Teams_windows_x64.exe -Destination C:\Temp\
-    echo 'Teams Copied'
 }
 
-$Trapeze = read-host “Type yes to install Trapeze files...”
+$Allison = read-host “Type yes to install Allison Transmission Application...”
 
-if ($Trapeze -eq 'yes'){
+if ($Allison -eq 'yes'){
 
-    #copy  I:\Trapeze\TM17 Software to temp folder
+    #copy  I:\Maintenance\Allison Software to temp folder
 
-    Copy-Item -Path I:\Trapeze\'TM17 Software' -Destination C:\Temp\ -Recurse |out-null
-
-
-    Start-Process C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'Visual C++ Redistributable'\vcredist_x86.exe |out-null
-
-    read-host “Press ENTER to install DhtmlEd files...”
-
-    msiexec.exe /i C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\DhtmlEd.msi |out-null
-
-    read-host “Press ENTER to install TMprerequisites files...”
-    echo "insert DPAPPAVL3 into application server DNS"
+    Copy-Item -Path $AllisonPath -Destination $TempPath |out-null
 
 
-    msiexec.exe /i C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\TMPrerequisites.msi |out-null
+    Start-Process $AllisonExecute |out-null
 
-    read-host “Press ENTER to install TMDispatchWorkstation files...”
-    echo "insert DPAPPAVL3 into machine name"
 
-    msiexec.exe /i C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\TMDispatchWorkstation.msi |out-null
 
-    read-host “Press ENTER to install TM Des Moines Map Data files...”
-
-    msiexec.exe /i C:\Temp\'TM17 Software'\'TM Des Moines Map Data (Lay).msi' |out-null
-
-    read-host “Press ENTER to Copy AppData files...”
-
-    read-host “Stop Service TMAppDataService and then press ENTER”
-
-    #Stop-Service -Name "TMAppDataService"
-
-    Copy-Item -Path C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.11.1 (03-07-2018)NR'\WorkstationInstallForUsers\* -Destination C:\TransitMaster\ |out-null
-
-    read-host “Start Service TMAppDataService and then press ENTER”
-
-    #Start-Service -Name "TMAppDataService"
-
-    echo "open TM Bus Ops and enter the following into map download configuration"
-    echo "IP Address: 10.1.100.16"
-    echo "FTP Login: SVCTMFTP"
-    echo "Password in Keepass"
-    echo "Remote Map Location: \Mapfiles"
-
-    read-host “After verifing Bus Ops press ENTER”
-    echo 'trapeze done'
 } 
 
+$Voith = read-host "Type yes to install Voith Software..."
 
+if ($Voith -eq 'yes'){
 
+    Copy-Item -Path $VoithPath -Destination $TempPath |out-null
 
-
-
-$Touch = Read-Host "Install TouchPoint? yes or No"
-if ($Touch -eq 'yes'){
-
-    # copy enghouse touchpoint install and setup files
-
-    Copy-Item -Path I:\Enghouse\TouchPointInstall.reg -Destination C:\Temp\  |out-null
-
-    echo "open registry and add TouchPointInstall.reg"
-    read-host "Press enter after closing registry"
-
-
-
-    Copy-Item -Path I:\Enghouse\TouchPointSetup.exe -Destination C:\Temp\ |out-null
-
-    Start-Process C:\Temp\TouchPointSetup.exe |out-null
-
-
-    read-host 'touch point done'}
-
-$Avigilon = Read-Host "Install Avigilon? yes or No"
-if ($Avigilon -eq 'yes')
-{
-    # Copy Avigilon to temp file
-
-    Copy-Item -Path I:\Avigilon\AvigilonControlCenterClient-7.4.0.26.exe -Destination C:\Temp\ |out-null
-
-    #Start-Process C:\Temp\AvigilonControlCenterClient-7.4.0.26.exe |out-null
-
-    read-host 'Avigilon copied and needs installed.'
-}
-
-$Gallagher = Read-Host "Install Gallagher? yes or No"
-if ($Gallagher -eq 'yes')
-{
-    #copy Gallagher to temp file
-
-    Copy-Item -Path I:\Gallagher\'8.0 Gallagher'\8.00.1128 -Destination C:\Temp\ |out-null
-
-    #Start-Process C:\Temp\SetupGallagher.exe |out-null
-
-    read-host 'Gallager copied and needs installed.'
-}
-
-$Seon = Read-Host "Install Seon? yes or No"
-if ($Seon -eq 'yes')
-{
-
-    #copy Seon Max view to temp file
-
-    Copy-Item -Path I:\Seon\'Seon 4.10'\'Seon-vMax-View-V4.10.0.6258'\'Seon vMax View-V4.10.0.6258'.exe -Destination C:\Temp\ |out-null
-
-    #Start-Process C:\Temp\'Seon vMax View-V4.10.0.6258'.exe |out-null
-
-    read-host 'press enter when Seon done'
-}
-
-$Vid = Read-Host "Install Ops and Vid Center? yes or No"
-if ($Vid -eq 'yes')
-{
-    #Copy Vid-Center and Ops-Center to temp file
-
-    Copy-Item -Path I:\Verint\Op-Center_Setup_4.3.15.26551.exe -Destination C:\Temp\ |out-null
-    Copy-Item -Path I:\Verint\clientlicense.licx -Destination C:\Temp\ |out-null
-
-    #Start-Process C:\Temp\Op-Center_Setup_4.3.15.26551.exe |out-null
-
-    echo "Server name: DPAPPVRNT1\SQLEXPRESS"
-    echo "Username: sa"
-    echo "Password: search for: DPAPPVRNT1 SA PW"
-    echo "Client Serial Number: 06ADE-8F0B7-A54AF-D87C1-121EA-FC048"
-    echo "Client License file has been copied to the C:\Temp folder"
-
-
-    Read-Host "Op Center is installed"
-
-    Copy-Item -Path I:\Verint\Vid-Center_Setup_4.3.15.26551.exe -Destination C:\Temp\ |out-null
-
-    read-host 'Ops-Center and Vid-Center done'
-}
-
-$Silverlight = Read-Host "Copy Silverlight into temp file? yes or no"
-
-if ($Silverlight -eq 'yes')
-{
-
-    Copy-Item -Path I:\Microsoft\'Silverlight 5'\Silverlight_x64.exe -Destination C:\Temp\ |out-null
+    Start-Process $VoithExecute |out-null
 
 }
 
-$Creative = Read-Host "Copy Creative Cloud into temp file? yes or no"
 
-if ($Creative -eq 'yes')
-{
 
-    Copy-Item -Path I:\Adobe\'Adobe Creative Cloud'\Creative_Cloud_Set-Up2020.exe -Destination C:\Temp\ |out-null
 
-}
