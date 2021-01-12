@@ -35,25 +35,30 @@ Function Copy-Files{
 
 #Copy cisco umbrella and dart installers to temp
 
-$NewComputer = read-host "Type yes to install onto a new computer."
-
-if ($NewComputer -eq 'yes'){
-
-    Copy-Item -Path I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi -Destination C:\Temp\ |out-null
-
-    Copy-Item -Path I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi -Destination C:\Temp\ |out-null
-
-    msiexec.exe /i anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi |out-null
-    read-host “Press ENTER to install Dart Cisco files...”
-
-    msiexec.exe /i anyconnect-win-4.7.00136-dart-predeploy-k9.msi |out-null
-
-    echo 'cisco done'
-}
-
 #variables for paths and files to run
 
 $TempPath = "C:\Temp\"
+
+$UmbrellaQuestion = "Umbrella Anyconnect Application"
+$UmbrellaPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
+$UmbrellaExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
+$UmbrellaRecurse = "no"
+$UmbrellaMSI = "yes"
+
+$DARTQuestion = "DART Anyconnect Application"
+$DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
+$DARTExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
+$DARTRecurse = "no"
+$DARTMSI = "yes"
+
+
+
+Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
+
+
+
+Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $UmbrellaExecute $TempPath
+
 
 $AllisonQuestion = "Allison Transmission Application"
 $AllisonPath = "I:\Maintenance\Allison\AllisonDOCv2019.1.exe"
