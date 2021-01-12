@@ -87,4 +87,14 @@ $WabcoMSI = 'no'
 
 Copy-Files $WabcoQuestion $WabcoRecurse $WabcoMSI $WabcoPath $WabcoExecute $TempPath
 
+$VaporQuestion = "Vapor CLASS Diagnostic System Application"
+$VaporPath = "I:\Maintenance\'Vapor CLASS Systems'\'Customer CLASS Diag 3.35a'\"
+$VaporExecute = "C:\Temp\INSITE\INSITE.msi"
+$VaporRecurse = 'yes'
+$VaporMSI = 'yes'
+
+Copy-Files $VaporQuestion $VaporRecurse $VaporMSI $VaporPath $VaporExecute $TempPath
+echo "Must Copy the 'CLASS Diag144.exe' program into C:\Users\Public\Desktop folder to be used for all users!!!"
+
+
 
