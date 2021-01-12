@@ -22,13 +22,6 @@ Function Copy-Files{
 #    if ($MSIFile -eq 'yes'){
 #        msiexec.exe /i  |out-null}
     }
-
-
-   
-
-
-
-
 }
 
 #copy script to new computer from I: drive
@@ -45,20 +38,15 @@ $UmbrellaExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
 $UmbrellaRecurse = "no"
 $UmbrellaMSI = "yes"
 
+Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $UmbrellaExecute $TempPath
+
 $DARTQuestion = "DART Anyconnect Application"
 $DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
 $DARTExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
 $DARTRecurse = "no"
 $DARTMSI = "yes"
 
-
-
 Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
-
-
-
-Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $UmbrellaExecute $TempPath
-
 
 $AllisonQuestion = "Allison Transmission Application"
 $AllisonPath = "I:\Maintenance\Allison\AllisonDOCv2019.1.exe"
