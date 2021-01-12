@@ -79,4 +79,12 @@ $CumminsMSI = 'yes'
 
 Copy-Files $CumminsQuestion $CumminsRecurse $CumminsMSI $CumminsPath $CumminsExecute $TempPath
 
+$WabcoQuestion = "Wabco Meritor Application"
+$WabcoPath = "I:\Maintenance\Wabco\"
+$WabcoExecute = "C:\Temp\Wabco\setup.exe"
+$WabcoRecurse = 'yes'
+$WabcoMSI = 'no'
+
+Copy-Files $WabcoQuestion $WabcoRecurse $WabcoMSI $WabcoPath $WabcoExecute $TempPath
+
 
