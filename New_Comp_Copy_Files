@@ -4,13 +4,13 @@
 
 #variables for paths and files to run
 
-$TempPath = C:\Temp\
+$TempPath = "C:\Temp\"
 
-$AllisonPath = I:\Maintenance\Allison\AllisonDOCv2019.1.exe
-$AllisonExecute = C:\Temp\AllisonDOCv2019.1.exe
+$AllisonPath = "I:\Maintenance\Allison\AllisonDOCv2019.1.exe"
+$AllisonExecute = "C:\Temp\AllisonDOCv2019.1.exe"
 
-$VoithPath = I:\Maintenance\Voith\Voith.3\DIWAnosis352Setup.exe
-$VoithExecute = C:\Temp\DIWAnosis352Setup.exe
+$VoithPath = "I:\Maintenance\Voith\Voith.3\DIWAnosis352Setup.exe"
+$VoithExecute = "C:\Temp\DIWAnosis352Setup.exe"
 
 #copy script to new computer from I: drive
 
@@ -41,7 +41,7 @@ if ($Allison -eq 'yes'){
     Copy-Item -Path $AllisonPath -Destination $TempPath |out-null
 
 
-    Start-Process $AllisonExecute |out-null
+#    Start-Process $AllisonExecute |out-null
 
 
 
@@ -53,7 +53,7 @@ if ($Voith -eq 'yes'){
 
     Copy-Item -Path $VoithPath -Destination $TempPath |out-null
 
-    Start-Process $VoithExecute |out-null
+#    Start-Process $VoithExecute |out-null
 
 }
 
