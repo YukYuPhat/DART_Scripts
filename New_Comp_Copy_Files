@@ -206,7 +206,7 @@ $SilverlightMSI = "no"
 Copy-Files $SilverlightQuestion $SilverlightRecurse $SilverlightMSI $SilverlightPath $SilverlightExecute $TempPath
 
 $CreativeCloudQuestion = "Creative Cloud Application"
-$CreativeCloudPath = Join-Path "I:" -ChildPath "Adobe" | Join-Path -ChildPath "Adobe Creative Cloud" | Join-Path -ChildPath "Creative_Cloud_Set-Up2020.exe "
+$CreativeCloudPath = Join-Path "I:" -ChildPath "Adobe" | Join-Path -ChildPath "Adobe Creative Cloud" | Join-Path -ChildPath "Creative_Cloud_Set-Up2020.exe"
 $CreativeCloudExecute = "Do Not Use"
 $CreativeCloudRecurse = "no"
 $CreativeCloudMSI = "no"
