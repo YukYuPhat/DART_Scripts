@@ -168,16 +168,13 @@ $OpsCenterMSI = "no"
 
 Copy-Files $OpsCenterQuestion $OpsCenterRecurse $OpsCenterMSI $OpsCenterPath $OpsCenterExecute $TempPath
 
-$OpsCenterLicQuestion = "OpsCenterLic File"
-$OpsCenterLicPath = "I:\Verint\clientlicense.licx"
-$OpsCenterLicExecute = "Do Not Use"
-$OpsCenterLicRecurse = "no"
-$OpsCenterLicMSI = "no"
-
-Copy-Files $OpsCenterLicQuestion $OpsCenterLicRecurse $OpsCenterLicMSI $OpsCenterLicPath $OpsCenterLicExecute $TempPath
-
-$OpsCenterCheck = Test-Path C:\Temp\clientlicense.licx
+$OpsCenterCheck = Test-Path C:\Temp\Op-Center_Setup_4.3.15.26551.exe
 if ($OpsCenterCheck -eq $true){
+    
+    $OpsCenterLicPath = "I:\Verint\clientlicense.licx"
+    
+    Copy-Item -Path $OpsCenterLicPath -Destination $TempPath -Recurse |out-null
+
     echo "Server name: DPAPPVRNT1\SQLEXPRESS"
     echo "Username: sa"
     echo "Password: search for: DPAPPVRNT1 SA PW"
