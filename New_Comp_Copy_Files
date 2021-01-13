@@ -2,61 +2,97 @@
 
 #copy script to new computer from I: drive
 
-#Copy cisco umbrella and dart installers to temp
+Function Copy-Files{
+    param ($ToCopy, $Recur, $MSIFile, $CopyPath, $ExePath, $TempPath)
+    $Stuff = read-host “Type yes to copy $ToCopy...”
 
-$NewComputer = read-host "Type yes to install onto a new computer."
+    if ($Stuff -eq 'yes'){
 
-if ($NewComputer -eq 'yes'){
+        #copy  I:\Maintenance\Allison Software to temp folder
+        if ($Recur -eq 'yes'){
+        
+        Copy-Item -Path $CopyPath -Destination $TempPath -Recurse |out-null
+        }else{
+        Copy-Item -Path $CopyPath -Destination $TempPath |out-null
+        }
 
-    Copy-Item -Path I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi -Destination C:\Temp\ |out-null
-
-    Copy-Item -Path I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi -Destination C:\Temp\ |out-null
-
-    msiexec.exe /i anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi |out-null
-    read-host “Press ENTER to install Dart Cisco files...”
-
-    msiexec.exe /i anyconnect-win-4.7.00136-dart-predeploy-k9.msi |out-null
-
-    echo 'cisco done'
-
-    Copy-Item -Path I:\Drivers\Realtek-High-Definition-Audio-Driver_5CH91_WIN_6.0.8960.1_A02.exe -Destination C:\Temp\ |out-null
-    Start-Process C\Temp\Realtek-High-Definition-Audio-Driver_5CH91_WIN_6.0.8960.1_A02.exe |out-null
-
-    echo 'Sound Driver done'
-
-    Copy-Item -Path I:\Microsoft\Teams_windows_x64.exe -Destination C:\Temp\
-    echo 'Teams Copied'
+#    if ($MSIFile -eq 'no'){
+#        Start-Process $ExePath |out-null
+#     }
+#    if ($MSIFile -eq 'yes'){
+#        msiexec.exe /i  |out-null}
+    }
 }
 
-$Trapeze = read-host “Type yes to install Trapeze files...”
-
-if ($Trapeze -eq 'yes'){
-
-    #copy  I:\Trapeze\TM17 Software to temp folder
-
-    Copy-Item -Path I:\Trapeze\'TM17 Software' -Destination C:\Temp\ -Recurse |out-null
 
 
-    Start-Process C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'Visual C++ Redistributable'\vcredist_x86.exe |out-null
+$TempPath = "C:\Temp\"
+
+$UmbrellaQuestion = "Umbrella Anyconnect Application"
+$UmbrellaPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
+$UmbrellaExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
+$UmbrellaRecurse = "no"
+$UmbrellaMSI = "yes"
+
+Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $UmbrellaExecute $TempPath
+
+
+#Copy cisco umbrella and dart installers to temp
+$DARTQuestion = "DART Anyconnect Application"
+$DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
+$DARTExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
+$DARTRecurse = "no"
+$DARTMSI = "yes"
+
+Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
+
+$REALTECQuestion = "REALTEC Sound Drivers"
+$REALTECPath = "I:\Drivers\Realtek-High-Definition-Audio-Driver_5CH91_WIN_6.0.8960.1_A02.exe"
+$REALTECExecute = "C:\Temp\Realtek-High-Definition-Audio-Driver_5CH91_WIN_6.0.8960.1_A02.exe"
+$REALTECRecurse = "no"
+$REALTECMSI = "no"
+
+Copy-Files $REALTECQuestion $REALTECRecurse $REALTECMSI $REALTECPath $REALTECExecute 
+
+$TeamsQuestion = "Microsoft Teams Application"
+$TeamsPath = "I:\Microsoft\Teams_windows_x64.exe"
+$TeamsExecute = "DO NOT INSTALL"
+$TeamsRecurse = "no"
+$TeamsMSI = "no"
+
+Copy-Files $TeamsQuestion $TeamsRecurse $TeamsMSI $TeamsPath $TeamsExecute $TempPath
+
+
+$TrapezeQuestion = "Trapeze 17 Application"
+$TrapezePath = "I:\Trapeze\TM17_Software"
+$TrapezeExecute = "DO NOT USE"
+$TrapezeRecurse = "yes"
+$TrapezeMSI = "no"
+
+Copy-Files $TrapezeQuestion $TrapezeRecurse $TrapezeMSI $TrapezePath $TrapezeExecute $TempPath
+
+$DidYouCopy = Read-Host "Did you copy the Trapeze Files? (yes)"
+if ($DidYouCopy -eq 'yes'){
+    Start-Process C:\Temp\TM17_Software\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'Visual C++ Redistributable'\vcredist_x86.exe |out-null
 
     read-host “Press ENTER to install DhtmlEd files...”
 
-    msiexec.exe /i C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\DhtmlEd.msi |out-null
+    msiexec.exe /i C:\Temp\TM17_Software\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\DhtmlEd.msi |out-null
 
     read-host “Press ENTER to install TMprerequisites files...”
     echo "insert DPAPPAVL3 into application server DNS"
 
 
-    msiexec.exe /i C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\TMPrerequisites.msi |out-null
+    msiexec.exe /i C:\Temp\TM17_Software\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\TMPrerequisites.msi |out-null
 
     read-host “Press ENTER to install TMDispatchWorkstation files...”
     echo "insert DPAPPAVL3 into machine name"
 
-    msiexec.exe /i C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\TMDispatchWorkstation.msi |out-null
+    msiexec.exe /i C:\Temp\TM17_Software\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'22S2000-017 Dispatch (08-04-2017)'\TMDispatchWorkstation.msi |out-null
 
     read-host “Press ENTER to install TM Des Moines Map Data files...”
 
-    msiexec.exe /i C:\Temp\'TM17 Software'\'TM Des Moines Map Data (Lay).msi' |out-null
+    msiexec.exe /i C:\Temp\TM17_Software\'TM Des Moines Map Data (Lay).msi' |out-null
 
     read-host “Press ENTER to Copy AppData files...”
 
@@ -64,7 +100,7 @@ if ($Trapeze -eq 'yes'){
 
     #Stop-Service -Name "TMAppDataService"
 
-    Copy-Item -Path C:\Temp\'TM17 Software'\'Des Moines_DART_22S2000-017 Gen II Release v17.0.11.1 (03-07-2018)NR'\WorkstationInstallForUsers\* -Destination C:\TransitMaster\ |out-null
+    Copy-Item -Path C:\Temp\TM17_Software\'Des Moines_DART_22S2000-017 Gen II Release v17.0.11.1 (03-07-2018)NR'\WorkstationInstallForUsers\* -Destination C:\TransitMaster\ |out-null
 
     read-host “Start Service TMAppDataService and then press ENTER”
 
@@ -80,105 +116,101 @@ if ($Trapeze -eq 'yes'){
     echo 'trapeze done'
 } 
 
+$TouchRegQuestion = "Touchpoint Registry file"
+$TouchRegPath = "I:\Enghouse\TouchPointInstall.reg"
+$TouchRegExecute = "DO NOT USE"
+$TouchRegRecurse = "yes"
+$TouchRegMSI = "no"
+
+Copy-Files $TouchRegQuestion $TouchRegRecurse $TouchRegMSI $TouchRegPath $TouchRegExecute $TempPath
+
+echo "open registry and add TouchPointInstall.reg"
+read-host "Press enter after closing registry"
+
+$TouchQuestion = "Touchpoint Application"
+$TouchPath = "I:\Enghouse\TouchPointSetup.exe"
+$TouchExecute = "C:\Temp\TouchPointSetup.exe"
+$TouchRecurse = "no"
+$TouchMSI = "no"
+
+Copy-Files $TouchQuestion $TouchRecurse $TouchMSI $TouchPath $TouchExecute $TempPath
+
+#Start-Process C:\Temp\TouchPointSetup.exe |out-null
+
+$AvigilonQuestion = "Avigilon Application"
+$AvigilonPath = "I:\Avigilon\AvigilonControlCenterClient-7.4.0.26.exe"
+$AvigilonExecute = "C:\Temp\AvigilonControlCenterClient-7.4.0.26.exe"
+$AvigilonRecurse = "no"
+$AvigilonMSI = "no"
+
+Copy-Files $AvigilonQuestion $AvigilonRecurse $AvigilonMSI $AvigilonPath $AvigilonExecute $TempPath
+
+$GallagherQuestion = "Gallagher Application"
+$GallagherPath = Join-Path "I:" -ChildPath "Gallagher" | Join-Path -ChildPath "8.0 Gallagher" | Join-Path -ChildPath "8.00.1128"
+$GallagherExecute = "C:\Temp\8.00.1128\setup.exe"
+$GallagherRecurse = "yes"
+$GallagherMSI = "no"
+
+Copy-Files $GallagherQuestion $GallagherRecurse $GallagherMSI $GallagherPath $GallagherExecute $TempPath
 
 
 
+$SeonQuestion = "Seon Application"
+$SeonPath = Join-Path "I:" -ChildPath "Seon" | Join-Path -ChildPath "Seon 4.10" | Join-Path -ChildPath "Seon-vMax-View-V4.10.0.6258" | Join-Path -ChildPath "Seon vMax View-V4.10.0.6258'.exe"
+$SeonExecute = "DO NOT USE"
+$SeonRecurse = "no"
+$SeonMSI = "no"
 
+Copy-Files $SeonQuestion $SeonRecurse $SeonMSI $SeonPath $SeonExecute $TempPath
 
-$Touch = Read-Host "Install TouchPoint? yes or No"
-if ($Touch -eq 'yes'){
+$OpsCenterQuestion = "Ops-Center Application"
+$OpsCenterPath = "I:\Verint\Op-Center_Setup_4.3.15.26551.exe"
+$OpsCenterExecute = "Not Used"
+$OpsCenterRecurse = "no"
+$OpsCenterMSI = "no"
 
-    # copy enghouse touchpoint install and setup files
+Copy-Files $OpsCenterQuestion $OpsCenterRecurse $OpsCenterMSI $OpsCenterPath $OpsCenterExecute $TempPath
 
-    Copy-Item -Path I:\Enghouse\TouchPointInstall.reg -Destination C:\Temp\  |out-null
+$OpsCenterLicQuestion = "OpsCenterLic File"
+$OpsCenterLicPath = "I:\Verint\clientlicense.licx"
+$OpsCenterLicExecute = "Do Not Use"
+$OpsCenterLicRecurse = "no"
+$OpsCenterLicMSI = "no"
 
-    echo "open registry and add TouchPointInstall.reg"
-    read-host "Press enter after closing registry"
+Copy-Files $OpsCenterLicQuestion $OpsCenterLicRecurse $OpsCenterLicMSI $OpsCenterLicPath $OpsCenterLicExecute $TempPath
 
+echo "Server name: DPAPPVRNT1\SQLEXPRESS"
+echo "Username: sa"
+echo "Password: search for: DPAPPVRNT1 SA PW"
+echo "Client Serial Number: 06ADE-8F0B7-A54AF-D87C1-121EA-FC048"
+echo "Client License file has been copied to the C:\Temp folder"
 
+Read-Host "Op Center is installed"
 
-    Copy-Item -Path I:\Enghouse\TouchPointSetup.exe -Destination C:\Temp\ |out-null
+$VidCenterQuestion = "VidCenter Application"
+$VidCenterPath = "I:\Verint\Vid-Center_Setup_4.3.15.26551.exe"
+$VidCenterExecute = "Do not Use"
+$VidCenterRecurse = "no"
+$VidCenterMSI = "no"
 
-    Start-Process C:\Temp\TouchPointSetup.exe |out-null
+Copy-Files $VidCenterQuestion $VidCenterRecurse $VidCenterMSI $VidCenterPath $VidCenterExecute $TempPath
 
+read-host 'Ops-Center and Vid-Center done'
 
-    read-host 'touch point done'}
+$SilverlightQuestion = "Silverlight Application"
+$SilverlightPath = Join-Path "I:" -ChildPath "Microsoft" | Join-Path -ChildPath "Silverlight 5" | Join-Path -ChildPath "Silverlight_x64.exe"
+$SilverlightExecute = "Do Not Use"
+$SilverlightRecurse = "no"
+$SilverlightMSI = "no"
 
-$Avigilon = Read-Host "Install Avigilon? yes or No"
-if ($Avigilon -eq 'yes')
-{
-    # Copy Avigilon to temp file
+Copy-Files $SilverlightQuestion $SilverlightRecurse $SilverlightMSI $SilverlightPath $SilverlightExecute $TempPath
 
-    Copy-Item -Path I:\Avigilon\AvigilonControlCenterClient-7.4.0.26.exe -Destination C:\Temp\ |out-null
+$CreativeCloudQuestion = "Creative Cloud Application"
+$CreativeCloudPath = Join-Path "I:" -ChildPath "Adobe" | Join-Path -ChildPath "Adobe Creative Cloud" | Join-Path -ChildPath "Creative_Cloud_Set-Up2020.exe "
+$CreativeCloudExecute = "Do Not Use"
+$CreativeCloudRecurse = "no"
+$CreativeCloudMSI = "no"
 
-    #Start-Process C:\Temp\AvigilonControlCenterClient-7.4.0.26.exe |out-null
+Copy-Files $CreativeCloudQuestion $CreativeCloudRecurse $CreativeCloudMSI $CreativeCloudPath $CreativeCloudExecute $TempPath
 
-    read-host 'Avigilon copied and needs installed.'
-}
-
-$Gallagher = Read-Host "Install Gallagher? yes or No"
-if ($Gallagher -eq 'yes')
-{
-    #copy Gallagher to temp file
-
-    Copy-Item -Path I:\Gallagher\'8.0 Gallagher'\8.00.1128 -Destination C:\Temp\ |out-null
-
-    #Start-Process C:\Temp\SetupGallagher.exe |out-null
-
-    read-host 'Gallager copied and needs installed.'
-}
-
-$Seon = Read-Host "Install Seon? yes or No"
-if ($Seon -eq 'yes')
-{
-
-    #copy Seon Max view to temp file
-
-    Copy-Item -Path I:\Seon\'Seon 4.10'\'Seon-vMax-View-V4.10.0.6258'\'Seon vMax View-V4.10.0.6258'.exe -Destination C:\Temp\ |out-null
-
-    #Start-Process C:\Temp\'Seon vMax View-V4.10.0.6258'.exe |out-null
-
-    read-host 'press enter when Seon done'
-}
-
-$Vid = Read-Host "Install Ops and Vid Center? yes or No"
-if ($Vid -eq 'yes')
-{
-    #Copy Vid-Center and Ops-Center to temp file
-
-    Copy-Item -Path I:\Verint\Op-Center_Setup_4.3.15.26551.exe -Destination C:\Temp\ |out-null
-    Copy-Item -Path I:\Verint\clientlicense.licx -Destination C:\Temp\ |out-null
-
-    #Start-Process C:\Temp\Op-Center_Setup_4.3.15.26551.exe |out-null
-
-    echo "Server name: DPAPPVRNT1\SQLEXPRESS"
-    echo "Username: sa"
-    echo "Password: search for: DPAPPVRNT1 SA PW"
-    echo "Client Serial Number: 06ADE-8F0B7-A54AF-D87C1-121EA-FC048"
-    echo "Client License file has been copied to the C:\Temp folder"
-
-
-    Read-Host "Op Center is installed"
-
-    Copy-Item -Path I:\Verint\Vid-Center_Setup_4.3.15.26551.exe -Destination C:\Temp\ |out-null
-
-    read-host 'Ops-Center and Vid-Center done'
-}
-
-$Silverlight = Read-Host "Copy Silverlight into temp file? yes or no"
-
-if ($Silverlight -eq 'yes')
-{
-
-    Copy-Item -Path I:\Microsoft\'Silverlight 5'\Silverlight_x64.exe -Destination C:\Temp\ |out-null
-
-}
-
-$Creative = Read-Host "Copy Creative Cloud into temp file? yes or no"
-
-if ($Creative -eq 'yes')
-{
-
-    Copy-Item -Path I:\Adobe\'Adobe Creative Cloud'\Creative_Cloud_Set-Up2020.exe -Destination C:\Temp\ |out-null
-
-}
+read-host "Press Enter to Exit."
