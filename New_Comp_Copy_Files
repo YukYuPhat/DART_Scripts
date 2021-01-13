@@ -87,7 +87,10 @@ $VaporRecurse = 'yes'
 $VaporMSI = 'yes'
 
 Copy-Files $VaporQuestion $VaporRecurse $VaporMSI $VaporPath $VaporExecute $TempPath
-echo "Must Copy the 'CLASS Diag144.exe' program into C:\Users\Public\Desktop folder to be used for all users!!!"
+
+$VaporTestPath = Test-Path C:\Temp\Customer_CLASS_Diag_3.35a
+if ($VaporTestPath -eq $true){
+    echo "Must Copy the 'CLASS Diag144.exe' program into C:\Users\Public\Desktop folder to be used for all users!!!"}
 
 $ThermoKingQuestion = "Thermo King SMART-Pac Application"
 $ThermoKingPath = Join-Path "I:" -ChildPath "Maintenance" | Join-Path -ChildPath "ThermoKing" | Join-Path -ChildPath "ThermoKing Smart Pac"
@@ -106,5 +109,4 @@ $CANDiagMSI = 'yes'
 Copy-Files $CANDiagQuestion $CANDiagRecurse $CANDiagMSI $CANDiagPath $CANDiagExecute $TempPath
 
 $a = read-host "press enter to exit"
-
 
