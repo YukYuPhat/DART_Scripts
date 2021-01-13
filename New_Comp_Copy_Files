@@ -24,8 +24,6 @@ Function Copy-Files{
     }
 }
 
-
-
 $TempPath = "C:\Temp\"
 
 $UmbrellaQuestion = "Umbrella Anyconnect Application"
@@ -35,7 +33,6 @@ $UmbrellaRecurse = "no"
 $UmbrellaMSI = "yes"
 
 Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $UmbrellaExecute $TempPath
-
 
 #Copy cisco umbrella and dart installers to temp
 $DARTQuestion = "DART Anyconnect Application"
@@ -62,7 +59,6 @@ $TeamsMSI = "no"
 
 Copy-Files $TeamsQuestion $TeamsRecurse $TeamsMSI $TeamsPath $TeamsExecute $TempPath
 
-
 $TrapezeQuestion = "Trapeze 17 Application"
 $TrapezePath = "I:\Trapeze\TM17_Software"
 $TrapezeExecute = "DO NOT USE"
@@ -71,8 +67,8 @@ $TrapezeMSI = "no"
 
 Copy-Files $TrapezeQuestion $TrapezeRecurse $TrapezeMSI $TrapezePath $TrapezeExecute $TempPath
 
-$DidYouCopy = Read-Host "Did you copy the Trapeze Files? (yes)"
-if ($DidYouCopy -eq 'yes'){
+$DidYouCopy = Test-Path C:\Temp\TM_Software
+if ($DidYouCopy -eq $true){
     Start-Process C:\Temp\TM17_Software\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'Visual C++ Redistributable'\vcredist_x86.exe |out-null
 
     read-host “Press ENTER to install DhtmlEd files...”
@@ -116,7 +112,7 @@ if ($DidYouCopy -eq 'yes'){
     echo 'trapeze done'
 } 
 
-$TouchRegQuestion = "Touchpoint Registry file"
+$TouchRegQuestion = "Touchpoint Program"
 $TouchRegPath = "I:\Enghouse\TouchPointInstall.reg"
 $TouchRegExecute = "DO NOT USE"
 $TouchRegRecurse = "yes"
@@ -124,18 +120,19 @@ $TouchRegMSI = "no"
 
 Copy-Files $TouchRegQuestion $TouchRegRecurse $TouchRegMSI $TouchRegPath $TouchRegExecute $TempPath
 
-echo "open registry and add TouchPointInstall.reg"
-read-host "Press enter after closing registry"
+$TouchRegCheck = Test-Path C:\Temp\TouchPointInstall.reg
+if ($TouchRegCheck -eq $true){
+    echo "open registry and add TouchPointInstall.reg"
+    read-host "Press enter after closing registry"
 
-$TouchQuestion = "Touchpoint Application"
-$TouchPath = "I:\Enghouse\TouchPointSetup.exe"
-$TouchExecute = "C:\Temp\TouchPointSetup.exe"
-$TouchRecurse = "no"
-$TouchMSI = "no"
+    
+    
+    $TouchPath = "I:\Enghouse\TouchPointSetup.exe"
+    
 
-Copy-Files $TouchQuestion $TouchRecurse $TouchMSI $TouchPath $TouchExecute $TempPath
+    Copy-Item -Path $TouchPath -Destination $TempPath -Recurse |out-null
 
-#Start-Process C:\Temp\TouchPointSetup.exe |out-null
+}
 
 $AvigilonQuestion = "Avigilon Application"
 $AvigilonPath = "I:\Avigilon\AvigilonControlCenterClient-7.4.0.26.exe"
@@ -179,23 +176,23 @@ $OpsCenterLicMSI = "no"
 
 Copy-Files $OpsCenterLicQuestion $OpsCenterLicRecurse $OpsCenterLicMSI $OpsCenterLicPath $OpsCenterLicExecute $TempPath
 
-echo "Server name: DPAPPVRNT1\SQLEXPRESS"
-echo "Username: sa"
-echo "Password: search for: DPAPPVRNT1 SA PW"
-echo "Client Serial Number: 06ADE-8F0B7-A54AF-D87C1-121EA-FC048"
-echo "Client License file has been copied to the C:\Temp folder"
+$OpsCenterCheck = Test-Path C:\Temp\clientlicense.licx
+if ($OpsCenterCheck -eq $true){
+    echo "Server name: DPAPPVRNT1\SQLEXPRESS"
+    echo "Username: sa"
+    echo "Password: search for: DPAPPVRNT1 SA PW"
+    echo "Client Serial Number: 06ADE-8F0B7-A54AF-D87C1-121EA-FC048"
+    echo "Client License file has been copied to the C:\Temp folder"
 
-Read-Host "Op Center is installed"
+    Read-Host "Press Enter after Op Center is installed."
 
-$VidCenterQuestion = "VidCenter Application"
-$VidCenterPath = "I:\Verint\Vid-Center_Setup_4.3.15.26551.exe"
-$VidCenterExecute = "Do not Use"
-$VidCenterRecurse = "no"
-$VidCenterMSI = "no"
-
-Copy-Files $VidCenterQuestion $VidCenterRecurse $VidCenterMSI $VidCenterPath $VidCenterExecute $TempPath
-
-read-host 'Ops-Center and Vid-Center done'
+    
+    $VidCenterPath = "I:\Verint\Vid-Center_Setup_4.3.15.26551.exe"
+    
+    Copy-Item -Path $VidCenterPath -Destination $TempPath -Recurse |out-null
+    
+    read-host 'Ops-Center and Vid-Center done'
+}
 
 $SilverlightQuestion = "Silverlight Application"
 $SilverlightPath = Join-Path "I:" -ChildPath "Microsoft" | Join-Path -ChildPath "Silverlight 5" | Join-Path -ChildPath "Silverlight_x64.exe"
