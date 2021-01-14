@@ -45,12 +45,12 @@ Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $Umbrel
 
 #Copy cisco umbrella and dart installers to temp
 
-$CiscoDidYouCopy = Test-Path C:\Temp\TM_Software\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi
+$CiscoDidYouCopy = Test-Path C:\Temp\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi
 if ($CiscoDidYouCopy -eq $true){
 
     $DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
 
-    Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
+    
 
     Copy-Item -Path $DARTPath -Destination $TempPath -Recurse |out-null
 }
@@ -95,7 +95,7 @@ $VaporMSI = 'yes'
 
 Copy-Files $VaporQuestion $VaporRecurse $VaporMSI $VaporPath $VaporExecute $TempPath
 
-$VaporTestPath = Test-Path C:\Temp\Customer_CLASS_Diag_3.35a
+$VaporTestPath = Test-Path C:\Temp\'ThermoKing Smart Pac'\Customer_CLASS_Diag_3.35a
 if ($VaporTestPath -eq $true){
     echo "Must Copy the 'CLASS Diag144.exe' program into C:\Users\Public\Desktop folder to be used for all users!!!"}
 
@@ -116,4 +116,3 @@ $CANDiagMSI = 'yes'
 Copy-Files $CANDiagQuestion $CANDiagRecurse $CANDiagMSI $CANDiagPath $CANDiagExecute $TempPath
 
 $a = read-host "press enter to exit"
-
