@@ -1,4 +1,5 @@
 #this is for Maintenance Surface Pro Tablets
+#copy script to new computer from I: drive
 
 #create Temp folder and copy script into folder
 
@@ -15,13 +16,15 @@ Function Copy-Files{
         }else{
         Copy-Item -Path $CopyPath -Destination $TempPath |out-null
         }
-
-#    if ($MSIFile -eq 'no'){
-#        Start-Process $ExePath |out-null
-#     }
-#    if ($MSIFile -eq 'yes'){
-#        msiexec.exe /i  |out-null}
     }
+#    if ($ExePath -ne "DO NOT INSTALL"){
+#       if ($MSIFile -eq 'no'){
+#            Start-Process $ExePath |out-null
+#       }
+#       if ($MSIFile -eq 'yes'){
+#            msiexec.exe /i $TempPath$ExePath |out-null}
+#        }
+#    }
 }
 
 #copy script to new computer from I: drive
@@ -40,13 +43,17 @@ $UmbrellaMSI = "yes"
 
 Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $UmbrellaExecute $TempPath
 
-$DARTQuestion = "DART Anyconnect Application"
-$DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
-$DARTExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
-$DARTRecurse = "no"
-$DARTMSI = "yes"
+#Copy cisco umbrella and dart installers to temp
 
-Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
+$CiscoDidYouCopy = Test-Path C:\Temp\TM_Software\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi
+if ($CiscoDidYouCopy -eq $true){
+
+    $DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
+
+    Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
+
+    Copy-Item -Path $DARTPath -Destination $TempPath -Recurse |out-null
+}
 
 $AllisonQuestion = "Allison Transmission Application"
 $AllisonPath = "I:\Maintenance\Allison\AllisonDOCv2019.1.exe"
