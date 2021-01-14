@@ -15,13 +15,15 @@ Function Copy-Files{
         }else{
         Copy-Item -Path $CopyPath -Destination $TempPath |out-null
         }
-
-#    if ($MSIFile -eq 'no'){
-#        Start-Process $ExePath |out-null
-#     }
-#    if ($MSIFile -eq 'yes'){
-#        msiexec.exe /i  |out-null}
     }
+#    if ($ExePath -ne "DO NOT INSTALL"){
+#       if ($MSIFile -eq 'no'){
+#            Start-Process $ExePath |out-null
+#       }
+#       if ($MSIFile -eq 'yes'){
+#            msiexec.exe /i $TempPath$ExePath |out-null}
+#        }
+#    }
 }
 
 $TempPath = "C:\Temp\"
@@ -35,13 +37,16 @@ $UmbrellaMSI = "yes"
 Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $UmbrellaExecute $TempPath
 
 #Copy cisco umbrella and dart installers to temp
-$DARTQuestion = "DART Anyconnect Application"
-$DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
-$DARTExecute = "anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi"
-$DARTRecurse = "no"
-$DARTMSI = "yes"
 
-Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
+$CiscoDidYouCopy = Test-Path C:\Temp\TM_Software\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi
+if ($CiscoDidYouCopy -eq $true){
+
+    $DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
+
+    Copy-Files $DARTQuestion $DARTRecurse $DARTMSI $DARTPath $DARTExecute $TempPath
+
+    Copy-Item -Path $DARTPath -Destination $TempPath -Recurse |out-null
+}
 
 $REALTECQuestion = "REALTEC Sound Drivers"
 $REALTECPath = "I:\Drivers\Realtek-High-Definition-Audio-Driver_5CH91_WIN_6.0.8960.1_A02.exe"
@@ -61,7 +66,7 @@ Copy-Files $TeamsQuestion $TeamsRecurse $TeamsMSI $TeamsPath $TeamsExecute $Temp
 
 $TrapezeQuestion = "Trapeze 17 Application"
 $TrapezePath = "I:\Trapeze\TM17_Software"
-$TrapezeExecute = "DO NOT USE"
+$TrapezeExecute = "DO NOT INSTALL"
 $TrapezeRecurse = "yes"
 $TrapezeMSI = "no"
 
@@ -114,7 +119,7 @@ if ($DidYouCopy -eq $true){
 
 $TouchRegQuestion = "Touchpoint Program"
 $TouchRegPath = "I:\Enghouse\TouchPointInstall.reg"
-$TouchRegExecute = "DO NOT USE"
+$TouchRegExecute = "DO NOT INSTALL"
 $TouchRegRecurse = "yes"
 $TouchRegMSI = "no"
 
@@ -136,7 +141,7 @@ if ($TouchRegCheck -eq $true){
 
 $AvigilonQuestion = "Avigilon Application"
 $AvigilonPath = "I:\Avigilon\AvigilonControlCenterClient-7.4.0.26.exe"
-$AvigilonExecute = "C:\Temp\AvigilonControlCenterClient-7.4.0.26.exe"
+$AvigilonExecute = "DO NOT INSTALL"
 $AvigilonRecurse = "no"
 $AvigilonMSI = "no"
 
@@ -144,7 +149,7 @@ Copy-Files $AvigilonQuestion $AvigilonRecurse $AvigilonMSI $AvigilonPath $Avigil
 
 $GallagherQuestion = "Gallagher Application"
 $GallagherPath = Join-Path "I:" -ChildPath "Gallagher" | Join-Path -ChildPath "8.0 Gallagher" | Join-Path -ChildPath "8.00.1128"
-$GallagherExecute = "C:\Temp\8.00.1128\setup.exe"
+$GallagherExecute = "DO NOT INSTALL"
 $GallagherRecurse = "yes"
 $GallagherMSI = "no"
 
@@ -154,7 +159,7 @@ Copy-Files $GallagherQuestion $GallagherRecurse $GallagherMSI $GallagherPath $Ga
 
 $SeonQuestion = "Seon Application"
 $SeonPath = Join-Path "I:" -ChildPath "Seon" | Join-Path -ChildPath "Seon 4.10" | Join-Path -ChildPath "Seon-vMax-View-V4.10.0.6258" | Join-Path -ChildPath "Seon vMax View-V4.10.0.6258'.exe"
-$SeonExecute = "DO NOT USE"
+$SeonExecute = "DO NOT INSTALL"
 $SeonRecurse = "no"
 $SeonMSI = "no"
 
@@ -162,7 +167,7 @@ Copy-Files $SeonQuestion $SeonRecurse $SeonMSI $SeonPath $SeonExecute $TempPath
 
 $OpsCenterQuestion = "Ops-Center Application"
 $OpsCenterPath = "I:\Verint\Op-Center_Setup_4.3.15.26551.exe"
-$OpsCenterExecute = "Not Used"
+$OpsCenterExecute = "DO NOT INSTALL"
 $OpsCenterRecurse = "no"
 $OpsCenterMSI = "no"
 
@@ -193,7 +198,7 @@ if ($OpsCenterCheck -eq $true){
 
 $SilverlightQuestion = "Silverlight Application"
 $SilverlightPath = Join-Path "I:" -ChildPath "Microsoft" | Join-Path -ChildPath "Silverlight 5" | Join-Path -ChildPath "Silverlight_x64.exe"
-$SilverlightExecute = "Do Not Use"
+$SilverlightExecute = "DO NOT INSTALL"
 $SilverlightRecurse = "no"
 $SilverlightMSI = "no"
 
@@ -201,7 +206,7 @@ Copy-Files $SilverlightQuestion $SilverlightRecurse $SilverlightMSI $Silverlight
 
 $CreativeCloudQuestion = "Creative Cloud Application"
 $CreativeCloudPath = Join-Path "I:" -ChildPath "Adobe" | Join-Path -ChildPath "Adobe Creative Cloud" | Join-Path -ChildPath "Creative_Cloud_Set-Up2020.exe"
-$CreativeCloudExecute = "Do Not Use"
+$CreativeCloudExecute = "DO NOT INSTALL"
 $CreativeCloudRecurse = "no"
 $CreativeCloudMSI = "no"
 
