@@ -38,7 +38,7 @@ Copy-Files $UmbrellaQuestion $UmbrellaRecurse $UmbrellaMSI $UmbrellaPath $Umbrel
 
 #Copy cisco umbrella and dart installers to temp
 
-$CiscoDidYouCopy = Test-Path C:\Temp\TM_Software\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi
+$CiscoDidYouCopy = Test-Path C:\Temp\anyconnect-win-4.7.00136-umbrella-predeploy-k9.msi
 if ($CiscoDidYouCopy -eq $true){
 
     $DARTPath = "I:\Cisco\AnyConnect\anyconnect-win-4.7.00136-predeploy-k9\anyconnect-win-4.7.00136-dart-predeploy-k9.msi"
@@ -72,7 +72,7 @@ $TrapezeMSI = "no"
 
 Copy-Files $TrapezeQuestion $TrapezeRecurse $TrapezeMSI $TrapezePath $TrapezeExecute $TempPath
 
-$DidYouCopy = Test-Path C:\Temp\TM_Software
+$DidYouCopy = Test-Path C:\Temp\TM17_Software
 if ($DidYouCopy -eq $true){
     Start-Process C:\Temp\TM17_Software\'Des Moines_DART_22S2000-017 Gen II Release v17.0.0.20 (08-04-2017)'\'Visual C++ Redistributable'\vcredist_x86.exe |out-null
 
